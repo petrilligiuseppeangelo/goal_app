@@ -1,0 +1,244 @@
+/* Stili base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Stili per goal e milestone */
+#goal-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.goal-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.milestone {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 8px;
+    transition: background-color 0.3s ease;
+}
+
+/* Stili per elementi completati */
+.goal-item.completed .goal-text {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.milestone.completed .milestone-text {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Stili per elementi collassati */
+.goal-item.collapsed .milestones-container,
+.goal-item.collapsed .milestone-input-container {
+    display: none !important;
+}
+
+/* Per nascondere le milestone figlie quando il genitore è collassato */
+.milestone.collapsed~.milestone[data-parent-id] {
+    display: none;
+}
+
+/* Input e bottoni */
+#goal-input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#export-json-btn,
+#import-json-btn {
+    background-color: #2196F3;
+    margin: 5px;
+}
+
+#export-json-btn:hover,
+#import-json-btn:hover {
+    background-color: #1976D2;
+}
+
+.delete-goal-btn,
+.delete-milestone-btn {
+    background-color: #ff4444 !important;
+}
+
+.delete-goal-btn:hover,
+.delete-milestone-btn:hover {
+    background-color: #cc0000 !important;
+}
+
+/* Priorità colori */
+.priority-1 {
+    background-color: #99ffcc !important;
+}
+
+.priority-2 {
+    background-color: #bffa49 !important;
+}
+
+.priority-3 {
+    background-color: #ffff3c !important;
+}
+
+.priority-4 {
+    background-color: #fdbb37 !important;
+}
+
+.priority-5 {
+    background-color: #ff3a3a !important;
+}
+
+/* Drag handle */
+.drag-handle,
+.milestone-drag-handle {
+    cursor: move;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    user-select: none;
+}
+
+/* Collapse button */
+.collapse-btn {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    user-select: none;
+    width: 20px;
+    text-align: center;
+    transition: transform 0.2s ease;
+    font-size: 12px;
+}
+
+.collapse-btn.collapsed {
+    transform: rotate(-90deg);
+}
+
+.collapse-btn:not(.collapsed) {
+    transform: rotate(0deg);
+}
+
+/* Per le milestone che non hanno figli */
+.milestone .collapse-btn.no-children {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* Stili per checkbox */
+.milestone-checkbox {
+    margin-right: 10px;
+}
+
+.goal-checkbox {
+    margin-right: 10px;
+}
+
+/* Stili per valori numerici */
+.value-input {
+    width: 60px;
+    margin-left: 10px;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.value-display {
+    margin-left: 10px;
+    padding: 2px 8px;
+    background-color: #e8f4fd;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #1976D2;
+    border: 1px solid #bbdefb;
+}
+
+.total-value {
+    float: right;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #1976D2;
+    background-color: #e8f4fd;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid #bbdefb;
+}
+
+.milestone-value-display {
+    margin-left: 10px;
+    padding: 1px 6px;
+    background-color: #f0f8ff;
+    border-radius: 3px;
+    font-size: 11px;
+    color: #2196F3;
+    border: 1px solid #bbdefb;
+}
+
+/* Stile per il riepilogo dei valori */
+.values-summary {
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    font-size: 12px;
+    color: #666;
+}
+
+.values-summary span {
+    margin-right: 15px;
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+}

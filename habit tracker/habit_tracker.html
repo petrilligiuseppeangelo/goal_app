@@ -1,0 +1,29 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HABIT TRACKER</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const habitInput = document.getElementById("habitInput");
+            habitInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    const habitText = habitInput.value.trim();
+                    if (habitText) {
+                        habit = document.createElement("h3");
+                        habit.textContent = habitText;
+                        document.body.appendChild(habit);
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>HABIT TRACKER</h1>
+    <input type="text" id="habitInput" placeholder="Enter a new habit">
+</body>
+
+</html>
