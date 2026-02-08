@@ -1,0 +1,244 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HABIT TRACKER</title>
+    <script>
+        //checklists for the habit
+        let habitChecklist = document.createElement("ul");
+
+        function checklistCreate() {
+            let checklistItemText = habitChecklistInput.value.trim();
+            if (checklistItemText) {
+                let checklistItem = document.createElement("li");
+
+                let checklistItemCheckbox = document.createElement("input");
+                checklistItemCheckbox.type = "checkbox";
+
+                let habitChecklistNestedInput = document.createElement("input");
+                habitChecklistNestedInput.type = "text";
+                habitChecklistNestedInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        checklistCreate();
+                    } else {
+                        console.log("Key pressed: " + event.key);
+                    }
+                });
+
+                checklistItem.appendChild(checklistItemCheckbox);
+                checklistItem.appendChild(document.createTextNode(checklistItemText));
+                habitChecklist.appendChild(checklistItem);
+                habitChecklist.appendChild(habitChecklistNestedInput);
+                habitChecklistInput.value = ""; // Clear the input field after adding the checklist item
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            //gets the input field for adding new habits
+            const habitInput = document.getElementById("habitInput");
+            const habitType = document.getElementById("habitType");
+
+
+            //listens for the Enter key to add a new habit
+            habitInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    let habitText = habitInput.value.trim();
+                    if (habitText) {
+                        let habit = document.createElement("div");
+
+                        //creates a new habit entry
+                        let habitHeader = document.createElement("div");
+
+                        let habitText = document.createElement("span");
+                        habitText.className = "habit-text";
+                        habitText.textContent = habitInput.value.trim();
+
+                        // creates a checkbox for the habit
+                        let habitCheckbox = document.createElement("input");
+                        habitCheckbox.type = "checkbox";
+
+                        //habit date input
+                        let habitDate = new Date();
+
+                        let habitDateInput = document.createElement("input");
+                        habitDateInput.type = "date";
+
+                        habitDateInputText = document.createElement("span");
+
+                        habitDateInput.addEventListener("change", function () {
+                            habitDate = habitDateInput.valueAsDate;
+                            //sets the text for the date input based on the habit type
+                            if (habitType.value === "daily") {
+
+                                habitDateInputText.textContent = 'From: ';
+
+                                //if the date is in the future, it will grey out the habit
+                                if (Date.parse(habitDate) > Date.parse(new Date())) {
+                                    habitHeader.style.color = "grey";
+                                } else {
+                                    habitHeader.style.color = "black";
+                                }
+
+                            } else if (habitType.value === "todo") {
+
+                                habitDateInputText.textContent = 'Due: ';
+
+                                //if the date is in the past, it will grey out the habit
+                                if (Date.parse(habitDate) < Date.parse(new Date())) {
+                                    habitHeader.style.color = "grey";
+                                } else {
+                                    habitHeader.style.color = "black";
+                                }
+                            }
+                        });
+
+                        //edit button for the habit
+                        habitEditBtn = document.createElement("button");
+                        habitEditBtn.textContent = "Edit";
+                        habitEditBtn.addEventListener("click", function () {
+                            let newHabitText = prompt("Edit your habit:", habitHeader.textContent);
+                            if (newHabitText !== null) {
+                                habitText.textContent = newHabitText.trim();
+                            }
+                        });
+
+                        //delete button for the habit
+                        habitDeleteBtn = document.createElement("button");
+                        habitDeleteBtn.textContent = "Delete";
+                        habitDeleteBtn.addEventListener("click", function () {
+                            //confirmation before deleting the habit
+                            confirmDelete = confirm("Are you sure you want to delete this habit?");
+                            if (confirmDelete) {
+                                habit.remove();
+                            }
+                        });
+
+                        //notes section for the habit
+                        habitNotes = document.createElement("textarea");
+
+                        //priority
+                        habitPrioritySlider = document.createElement("input");
+                        habitPrioritySlider.type = "range";
+                        habitPrioritySlider.min = "1";
+                        habitPrioritySlider.max = "5";
+                        habitPrioritySlider.value = "3";
+
+                        //sets the color of the habit based on the priority
+                        habitPrioritySlider.addEventListener("input", function () {
+                            switch (habitPrioritySlider.value) {
+                                case "1":
+                                    habit.style.backgroundColor = "lightgreen";
+                                    break;
+                                case "2":
+                                    habit.style.backgroundColor = "yellow";
+                                    break;
+                                case "3":
+                                    habit.style.backgroundColor = "orange";
+                                    break;
+                                case "4":
+                                    habit.style.backgroundColor = "coral";
+                                    break;
+                                case "5":
+                                    habit.style.backgroundColor = "red";
+                                    break;
+                            }
+                        });
+
+                        //Difficulty
+                        habitDifficultySlider = document.createElement("input");
+                        habitDifficultySlider.type = "range";
+                        habitDifficultySlider.min = "1";
+                        habitDifficultySlider.max = "5";
+                        habitDifficultySlider.value = "3";
+
+                        //sets the color of the habit based on the Difficulty
+                        habitDifficultySlider.addEventListener("input", function () {
+                            switch (habitDifficultySlider.value) {
+                                case "1":
+                                    habitHeader.style.backgroundColor = "lightgreen";
+                                    break;
+                                case "2":
+                                    habitHeader.style.backgroundColor = "yellow";
+                                    break;
+                                case "3":
+                                    habitHeader.style.backgroundColor = "orange";
+                                    break;
+                                case "4":
+                                    habitHeader.style.backgroundColor = "coral";
+                                    break;
+                                case "5":
+                                    habitHeader.style.backgroundColor = "red";
+                                    break;
+                            }
+                        });
+
+                        habitChecklistInput = document.createElement("input");
+                        habitChecklistInput.type = "text";
+                        habitChecklistInput.placeholder = "Add a checklist item";
+                        habitChecklistInput.addEventListener("keydown", function (event) {
+                            if (event.key === "Enter") {
+                                checklistCreate();
+                            } else {
+                                console.log("Key pressed: " + event.key);
+                            }
+                        });
+
+                        //appends
+                        habitHeader.appendChild(habitText);
+                        habitHeader.appendChild(habitCheckbox);
+                        habitHeader.appendChild(habitEditBtn);
+                        habitHeader.appendChild(habitDeleteBtn);
+
+                        habit.appendChild(habitHeader);
+                        habit.appendChild(habitNotes);
+                        habit.appendChild(document.createElement("br"));
+
+                        //habit.appendTextNode("Priority: ");
+                        habit.appendChild(habitPrioritySlider);
+                        habit.appendChild(document.createElement("br"));
+
+                        //habit.appendTextNode("Difficulty: ");
+                        habit.appendChild(habitDifficultySlider);
+                        habit.appendChild(document.createElement("br"));
+
+                        habit.appendChild(habitChecklistInput);
+                        habit.appendChild(habitChecklist);
+
+                        habit.appendChild(habitDateInputText);
+                        habit.appendChild(habitDateInput);
+
+                        document.body.appendChild(habit);
+                    }
+                    habitInput.value = ""; // Clear the input field after adding the habit
+
+                } else {
+                    console.log("Key pressed: " + event.key);
+                }
+            });
+
+        });
+    </script>
+
+    <style>
+        .habit-text {
+            font-weight: bolder;
+            font-size: larger;
+        }
+
+        div {
+            margin: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>HABIT TRACKER</h1>
+    <input type="text" id="habitInput" placeholder="Enter a new habit">
+    <select name="habitType" id="habitType">
+        <option value="daily">Daily</option>
+        <option value="todo">To-Do</option>
+    </select>
+</body>
+
+</html>
